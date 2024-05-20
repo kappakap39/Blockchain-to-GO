@@ -20,8 +20,23 @@ func (b *Block) DeriveHash() {
 }
 
 // CreateBlock สร้างบล็อกใหม่ด้วยข้อมูลและแฮชก่อนหน้า
+
+// func CreateBlock(data string, prevHash []byte) *Block {
+// 	block := &Block{[]byte{}, []byte(data), prevHash}
+// 	block.DeriveHash()
+// 	return block
+// }
+
+// CreateBlock สร้างบล็อกใหม่ด้วยข้อมูลและแฮชก่อนหน้า
 func CreateBlock(data string, prevHash []byte) *Block {
-	block := &Block{[]byte{}, []byte(data), prevHash}
+	var prevHashValue []byte
+	if len(prevHash) == 0 {
+		// หากไม่มี prevHash ให้กำหนด prevHashValue เป็น nil
+		prevHashValue = nil
+	} else {
+		prevHashValue = prevHash
+	}
+	block := &Block{[]byte{}, []byte(data), prevHashValue}
 	block.DeriveHash()
 	return block
 }

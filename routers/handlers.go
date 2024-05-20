@@ -18,13 +18,23 @@ func GetBlockchainHandler(chain *controllers.Blockchain) http.HandlerFunc {
 func AddBlockHandler(chain *controllers.Blockchain) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var data struct {
-			Data string `json:"data"`
+			Data []string `json:"data"` // เปลี่ยนจาก string เป็น []string เพื่อรองรับอาร์เรย์ของสตริง
 		}
 		if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
-		chain.AddBlock(data.Data)
-		w.WriteHeader(http.StatusCreated)
+
+		// เรียกใช้ฟังก์ชัน AddBlock และรับผลลัพธ์จากการเพิ่มบล็อก
+		newBlocks := chain.AddBlock(data.Data)
+
+		// สร้าง response สำหรับแสดงว่าบล็อกถูกเพิ่มเข้าไปในบล็อกเชนแล้ว
+		res := map[string]interface{}{
+			"message": "บล็อกถูกเพิ่มเข้าไปในบล็อกเชนแล้ว",
+			"data":    newBlocks,
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(res)
 	}
 }
