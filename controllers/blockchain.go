@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"GO-Project-blockchain-API02/server"
+	"blockchain_to_go/server"
 )
 
 // Blockchain struct แทนบล็อกเชนที่มีบล็อกเป็น array

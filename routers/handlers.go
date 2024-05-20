@@ -1,12 +1,12 @@
 package routers
 
 import (
-	"GO-Project-blockchain-API02/controllers"
+	"blockchain_to_go/controllers"
 	"encoding/json"
 	"net/http"
 )
 
-// GetBlockchainHandler handler สำหรับการดึงข้อมูลบล็อกเชนทั้งหมด
+// GetBlockchainHandler จัดการการร้องขอเพื่อดึงข้อมูลบล็อกเชนทั้งหมด
 func GetBlockchainHandler(chain *controllers.Blockchain) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -14,7 +14,7 @@ func GetBlockchainHandler(chain *controllers.Blockchain) http.HandlerFunc {
 	}
 }
 
-// AddBlockHandler handler สำหรับการเพิ่มบล็อกใหม่
+// AddBlockHandler จัดการการร้องขอเพื่อเพิ่มบล็อกใหม่
 func AddBlockHandler(chain *controllers.Blockchain) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var data struct {

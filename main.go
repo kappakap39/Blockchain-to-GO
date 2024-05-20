@@ -1,8 +1,8 @@
 package main
 
 import (
-	"GO-Project-blockchain-API02/controllers"
-	"GO-Project-blockchain-API02/routers"
+	"blockchain_to_go/controllers"
+	"blockchain_to_go/routers"
 	"fmt"
 	"net/http"
 )
