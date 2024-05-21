@@ -5,38 +5,28 @@ import (
 	"crypto/sha256"
 )
 
-// Block struct แทนบล็อกแต่ละบล็อกในบล็อกเชน
+// Block struct represents each block in the blockchain
 type Block struct {
 	Hash     []byte `json:"hash"`
-	Data     []byte `json:"data"`
-	PrevHash []byte `json:"prev_hash"`
+	Data     string `json:"data"`
+	PrevHash []byte `json:"prev_hash,omitempty"`
 }
 
-// DeriveHash คำนวณแฮชของบล็อก
+// DeriveHash calculates the hash of the block
 func (b *Block) DeriveHash() {
-	info := bytes.Join([][]byte{b.Data, b.PrevHash}, []byte{})
+	var info []byte
+	if b.PrevHash == nil {
+		info = []byte(b.Data)
+	} else {
+		info = bytes.Join([][]byte{[]byte(b.Data), b.PrevHash}, []byte{})
+	}
 	hash := sha256.Sum256(info)
 	b.Hash = hash[:]
 }
 
-// CreateBlock สร้างบล็อกใหม่ด้วยข้อมูลและแฮชก่อนหน้า
-
-// func CreateBlock(data string, prevHash []byte) *Block {
-// 	block := &Block{[]byte{}, []byte(data), prevHash}
-// 	block.DeriveHash()
-// 	return block
-// }
-
-// CreateBlock สร้างบล็อกใหม่ด้วยข้อมูลและแฮชก่อนหน้า
+// CreateBlock creates a new block using provided data and previous hash
 func CreateBlock(data string, prevHash []byte) *Block {
-	var prevHashValue []byte
-	if len(prevHash) == 0 {
-		// หากไม่มี prevHash ให้กำหนด prevHashValue เป็น nil
-		prevHashValue = nil
-	} else {
-		prevHashValue = prevHash
-	}
-	block := &Block{[]byte{}, []byte(data), prevHashValue}
+	block := &Block{Data: data, PrevHash: prevHash}
 	block.DeriveHash()
 	return block
 }
