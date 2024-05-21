@@ -4,14 +4,6 @@
 // 	"bytes"
 // 	"crypto/sha256"
 // 	"fmt"
-//
-//
-//
-//
-//
-//
-//
-//
 // )
 
 // type BlockChain struct {
@@ -69,6 +61,8 @@
 // 		fmt.Println()
 // 	}
 // }
+
+//! 2
 
 // package main
 
