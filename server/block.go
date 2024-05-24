@@ -3,13 +3,16 @@ package server
 import (
 	"bytes"
 	"crypto/sha256"
+
 )
 
 // Block struct represents each block in the blockchain
 type Block struct {
-	Hash     []byte `json:"hash"`
-	Data     string `json:"data"`
-	PrevHash []byte `json:"prev_hash,omitempty"`
+	Hash     []byte
+	Data     string
+	// Data     []byte
+	PrevHash []byte
+	Nonce int
 }
 
 // DeriveHash calculates the hash of the block
@@ -26,7 +29,13 @@ func (b *Block) DeriveHash() {
 
 // CreateBlock creates a new block using provided data and previous hash
 func CreateBlock(data string, prevHash []byte) *Block {
-	block := &Block{Data: data, PrevHash: prevHash}
-	block.DeriveHash()
+	// block := &Block{Data: data, PrevHash: prevHash}
+	block := &Block{[]byte{}, data, prevHash, 0}
+	pow := NewProof(block)
+	nonce, hash := pow.Run()
+
+	block.Hash = hash[:]
+	block.Nonce = nonce
+	// block.DeriveHash()
 	return block
 }

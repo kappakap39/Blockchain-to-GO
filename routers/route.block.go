@@ -9,6 +9,7 @@ import (
 func InitRoutes(chain *controllers.Blockchain) *http.ServeMux {
 	mux := http.NewServeMux()
 
+	// Define the handlers for blockchain operations
 	mux.HandleFunc("/get", controllers.GetBlockchainHandler)
 	mux.HandleFunc("/add", controllers.AddBlockHandler)
 
